@@ -1,15 +1,20 @@
+import json 
 from django.http import JsonResponse
+from .models import Product
 
+def products(request):
+    if request.method == "GET":
+        products = Product.objects.all()
 
-def hello(request):
-    return JsonResponse({
-        "message": "Hello World"
-    })
+        data = []
 
-def profile(request):
-    return JsonResponse({
-        "name": "Zeeshan",
-        "age": 24,
-        "role": "Full Stack Developer",
-        "experience": "2+ years"
-    })
+        for product in products:
+            data.append({
+                "id": product.id,
+                "name": product.name,
+                "price": product.price,
+                "quantity": product.quantity,
+                "description": product.description
+            })
+
+        return JsonResponse(data, safe=False)
