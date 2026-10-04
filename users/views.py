@@ -18,3 +18,22 @@ def products(request):
             })
 
         return JsonResponse(data, safe=False)
+
+def product_detail(request, id):
+
+    try:
+        product = Product.objects.get(id=id)
+
+        return JsonResponse({
+            "id": product.id,
+            "name": product.name,
+            "price": product.price,
+            "quantity": product.quantity,
+            "description": product.description
+        })
+    
+    except Product.DoesNotExist:
+
+        return JsonResponse({
+            "error": "Product not found"
+        }, status=404)
