@@ -1,5 +1,6 @@
 import json 
 from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
 from .models import Product
 
 # GET — Get all products
@@ -41,6 +42,7 @@ def product_detail(request, id):
         }, status=404)
 
 # POST — Create Product
+@csrf_exempt
 def create_product(request):
 
     if request.method == "POST":
@@ -64,6 +66,7 @@ def create_product(request):
         }, status=201)
 
 # PUT — Update Product
+@csrf_exempt
 def update_product(request, id):
 
     if request.method == "PUT":
@@ -91,6 +94,7 @@ def update_product(request, id):
         })
 
 # DELETE — Delete Product
+@csrf_exempt
 def delete_product(request, id):
 
     if request.method == "DELETE":
